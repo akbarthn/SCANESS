@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
+
+
 
 class ProfileController extends Controller
 {
@@ -20,22 +23,35 @@ class ProfileController extends Controller
             'user' => $request->user(),
         ]);
     }
-
     /**
      * Update the user's profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
+{
+    $user = Auth::user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+    // Upload foto (jika ada)
+    if ($request->hasFile('foto')) {
+        Log::info('Foto ditemukan:', [
+            'nama_file' => $request->file('foto')->getClientOriginalName()
+        ]);
+
+        if ($user->foto && Storage::disk('public')->exists($user->foto)) {
+            Storage::disk('public')->delete($user->foto);
+            Log::info('Foto lama dihapus.');
         }
 
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $path = $request->file('foto')->store('foto_profil', 'public');
+        $user->foto = $path;
     }
+
+    // Simpan data lainnya (selalu dijalankan)
+    $user->fill($request->only(['nama', 'email', 'nomor_hp', 'alamat']));
+    $user->save();
+
+    return back()->with('success', 'Profil berhasil diperbarui.');
+}
+
 
     /**
      * Delete the user's account.

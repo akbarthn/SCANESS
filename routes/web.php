@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\JadwalKaryawan;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -47,6 +48,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:karyawan'])->group(function () {
     Route::get('/karyawan/dashboard', fn () => view('karyawan.dashboard'))->name('karyawan.dashboard');
+    Route::get('/karyawan/jadwal', [JadwalKaryawan::class, 'index'])->name('karyawan.jadwal');
 });
 
 require __DIR__.'/auth.php';
