@@ -1,9 +1,9 @@
 @extends('layouts.karyawan')
 
 @section('content')
-<div class="min-h-screen bg-gray-100 font-[Poppins] py-8">
+<div class="min-h-screen bg-gray-100 font-semibold py-8">
     <div class="container mx-auto px-4">
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">Dashboard Karyawan</h1>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Dashboard</h1>
         <p class="text-gray-600 mb-8">Selamat datang di sistem informasi karyawan</p>
 
         <!-- Profile Card -->
@@ -12,7 +12,7 @@
                 <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
                     <!-- Profile Picture -->
                     <div class="w-36 h-36 rounded-full overflow-hidden border-4 border-white shadow-md mx-auto md:mx-0">
-                        <img src="{{ Auth::user()->foto ?? 'https://placehold.co/300' }}" alt="Foto profil karyawan"
+                        <img src="{{ Auth::user()->foto ? asset('storage/' . Auth::user()->foto) : '' }}" alt="Foto profil karyawan"
                              class="w-full h-full object-cover">
                     </div>
 

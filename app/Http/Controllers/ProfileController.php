@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Log;
 
 
 class ProfileController extends Controller
@@ -27,30 +27,23 @@ class ProfileController extends Controller
      * Update the user's profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
 
-    // Upload foto (jika ada)
-    if ($request->hasFile('foto')) {
-        Log::info('Foto ditemukan:', [
-            'nama_file' => $request->file('foto')->getClientOriginalName()
-        ]);
-
-        if ($user->foto && Storage::disk('public')->exists($user->foto)) {
-            Storage::disk('public')->delete($user->foto);
-            Log::info('Foto lama dihapus.');
+        if ($request->hasFile('foto')) {
+            if ($user->foto && Storage::disk('public')->exists($user->foto)) {
+                Storage::disk('public')->delete($user->foto);
+            }
+            $path = $request->file('foto')->store('foto_profil', 'public');
+            $user->foto = $path;
         }
 
-        $path = $request->file('foto')->store('foto_profil', 'public');
-        $user->foto = $path;
+        $user->fill($request->only(['nama', 'email', 'nomor_hp', 'alamat']));
+        $user->save();
+
+        return back()->with('success', 'Profil berhasil diperbarui.');
     }
 
-    // Simpan data lainnya (selalu dijalankan)
-    $user->fill($request->only(['nama', 'email', 'nomor_hp', 'alamat']));
-    $user->save();
-
-    return back()->with('success', 'Profil berhasil diperbarui.');
-}
 
 
     /**
