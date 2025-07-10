@@ -3,6 +3,13 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\SuperAdmin\DashboardController;
+use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\ShiftController;
+use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\AbsensiController;
+
+use App\Http\Middleware\IsSuperAdmin;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -37,9 +44,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'role:superadmin'])->group(function () {
-    Route::get('/superadmin/dashboard', fn () => view('superadmin.dashboard'))->name('superadmin.dashboard');
+Route::middleware(['auth', IsSuperAdmin::class])->group(function () {
+    Route::resource('karyawan', KaryawanController::class);
+    Route::get('/superadmin/dashboard', [DashboardController::class, 'index'])->name('superadmin.dashboard');
 });
+
+Route::middleware(['auth', IsSuperAdmin::class])->group(function () {
+    Route::resource('shift', ShiftController::class);
+});
+
+Route::middleware(['auth', IsSuperAdmin::class])->group(function () {
+    Route::resource('jadwal', JadwalController::class);
+});
+
+Route::middleware(['auth', IsSuperAdmin::class])->group(function () {
+    Route::resource('absensi', AbsensiController::class);
+});
+
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', fn () => view('admin.dashboard'))->name('admin.dashboard');

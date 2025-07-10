@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,13 +9,12 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Atribut yang boleh diisi massal (melalui create / update)
      *
-     * @var list<string>
+     * @var array
      */
     protected $fillable = [
         'nama',
@@ -28,9 +26,9 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Atribut yang disembunyikan saat diserialisasi
      *
-     * @var list<string>
+     * @var array
      */
     protected $hidden = [
         'password',
@@ -38,33 +36,47 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Casting atribut
      *
-     * @return array<string, string>
+     * @var array
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 
     /**
-     * Get the user's initials
+     * Mendapatkan inisial nama pengguna
+     *
+     * @return string
      */
     public function initials(): string
     {
-        return Str::of($this->name)
+        return Str::of($this->nama)                  // Digunakan 'nama', bukan 'name'
             ->explode(' ')
             ->take(2)
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
     }
 
-     // Relasi ke jadwal (karyawan)
-     public function jadwals()
-     {
-         return $this->hasMany(Jadwal::class);
-     }
+    /**
+     * Relasi: user memiliki banyak absensi
+     */
+    public function absensis()
+    {
+        return $this->hasMany(Absensi::class);
+    }
+
+    /**
+     * Relasi: user memiliki banyak jadwal
+     */
+    public function jadwals()
+    {
+        return $this->hasMany(Jadwal::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }

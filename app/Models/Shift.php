@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shift extends Model
 {
-    protected $fillable = ['nama', 'start', 'end'];
+    protected $table = 'shift';
+    protected $fillable = ['nama_shift', 'jam_masuk', 'jam_keluar'];
 
     // Relasi ke jadwal
-    public function jadwals()
+    public function absensi()
     {
-        return $this->hasMany(Jadwal::class);
+        return $this->hasMany(absensi::class);
     }
 }
