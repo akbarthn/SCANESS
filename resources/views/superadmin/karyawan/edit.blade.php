@@ -41,15 +41,14 @@
     {{-- Role --}}
     <div>
       <label for="role" class="block font-medium">Role</label>
-      <select name="role" id="role" class="w-full border rounded p-2" required>
+        <select name="role" id="role" required>
         <option value="">-- Pilih Role --</option>
-        @foreach ($roles as $r)
-          <option value="{{ $r }}"
-            {{ old('role', $karyawan->role) === $r ? 'selected' : '' }}>
+        @foreach($roles as $r)
+            <option value="{{ $r }}" {{ old('role') == $r ? 'selected' : '' }}>
             {{ ucfirst($r) }}
-          </option>
+            </option>
         @endforeach
-      </select>
+        </select>
       @error('role')
       <p class="text-sm text-red-600">{{ $message }}</p>
       @enderror

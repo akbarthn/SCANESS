@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+
+use App\Models\User;
+use App\Models\Shift;
 use Illuminate\Database\Eloquent\Model;
 
 class Absensi extends Model
 {
     protected $table = 'absensi'; 
-    protected $fillable = ['user_id','shift_id','tanggal','jam_masuk','status'];
+    protected $fillable = ['id_user', 'id_shift', 'tanggal','jam_masuk','status'];
 
     public function user()
     {

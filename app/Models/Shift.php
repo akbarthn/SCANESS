@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Shift extends Model
 {
     protected $table = 'shift';
-    protected $fillable = ['nama_shift', 'jam_masuk', 'jam_keluar'];
+    protected $fillable = ['nama', 'jam_masuk', 'jam_keluar'];
 
     // Relasi ke jadwal
     public function absensi()

@@ -30,14 +30,15 @@ class ShiftController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_shift' => 'required|string|max:255',
-            'jam_masuk'  => 'required',
-            'jam_keluar' => 'required|after:jam_masuk',
+            'nama'       => 'required|string|max:255',
+            'jam_masuk'  => 'required|date_format:H:i',
+            'jam_keluar' => 'required|date_format:H:i|after:jam_masuk',
         ]);
 
         Shift::create($validated);
 
-        return redirect()->route('shift.index')->with('success', 'Shift berhasil dibuat.');
+        return redirect()->route('superadmin.dashboard')
+                         ->with('success', 'Shift berhasil dibuat.');
     }
 
     /**
@@ -54,9 +55,9 @@ class ShiftController extends Controller
     public function update(Request $request, Shift $shift)
     {
         $validated = $request->validate([
-            'nama_shift' => 'required|string|max:255',
-            'jam_masuk'  => 'required',
-            'jam_keluar' => 'required|after:jam_masuk',
+            'nama' => 'required|string|max:255',
+            'jam_masuk'  => 'required|date_format:H:i',
+            'jam_keluar' => 'required|date_format:H:i|after:jam_masuk',
         ]);
 
         $shift->update($validated);

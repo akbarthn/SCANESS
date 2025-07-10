@@ -32,6 +32,10 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 });
 
+Route::get('/coba', function () {
+    return view('coba');
+});
+
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 Route::get('/dashboard', function () {
@@ -45,21 +49,20 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', IsSuperAdmin::class])->group(function () {
-    Route::resource('karyawan', KaryawanController::class);
-    Route::get('/superadmin/dashboard', [DashboardController::class, 'index'])->name('superadmin.dashboard');
-});
-
-Route::middleware(['auth', IsSuperAdmin::class])->group(function () {
-    Route::resource('shift', ShiftController::class);
-});
-
-Route::middleware(['auth', IsSuperAdmin::class])->group(function () {
     Route::resource('jadwal', JadwalController::class);
+    Route::get('/superadmin/jadwal/create', [JadwalController::class, 'create'])->name('superadmin.jadwal.create');
+    Route::get('/superadmin/jadwal/index', [JadwalController::class, 'index'])->name('superadmin.jadwal.index');
+    Route::resource('absensi', AbsensiController::class);
+    Route::resource('shift', ShiftController::class);
+    Route::resource('karyawan', KaryawanController::class);
+    Route::get('/superadmin/dashboard', [DashboardController::class,'index'])->name('superadmin.dashboard');
+    Route::get('/superadmin/karyawan/create', [KaryawanController::class, 'create'])->name('superadmin.karyawan.create');
+    Route::post('/superadmin/karyawan/edit', [KaryawanController::class, 'edit'])->name('superadmin.karyawan.edit');
+ 
+
 });
 
-Route::middleware(['auth', IsSuperAdmin::class])->group(function () {
-    Route::resource('absensi', AbsensiController::class);
-});
+
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {

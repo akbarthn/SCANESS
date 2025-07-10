@@ -13,6 +13,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        // $shifts = Shift::orderBy('id')->get();
+        // return view('superadmin.dashboard', compact('shifts'));
         // Total karyawan dengan role 'karyawan'
         $totalKaryawan = User::where('role', 'karyawan')->count();
 
