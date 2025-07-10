@@ -7,6 +7,7 @@
     <title>{{ $title ?? 'Dashboard Karyawan' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js']) <!-- Breeze asset -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 </head>
 <body class="bg-gray-100">
     <nav class="bg-white shadow p-4 flex justify-between items-center">
@@ -76,7 +77,6 @@
         </div>
     </div>
 </div>
-
         </div>
     </nav>
 

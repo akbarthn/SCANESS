@@ -93,3 +93,5 @@ document.getElementById('input-foto').addEventListener('change', function(event)
     }
 });
 </script>
+</div>
+

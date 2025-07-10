@@ -1,17 +1,41 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.superadmin')
+@section('content')
+<div class="container py-4">
+    <h1 class="mb-4">Dashboard Super Admin</h1>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total Karyawan</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ $totalKaryawan }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Total Admin</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ $totalAdmin }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Total Shift</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ $totalShift }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Total Jadwal</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ $totalJadwal }}</h5>
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>
+@endsection

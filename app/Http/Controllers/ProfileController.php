@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 
+
 class ProfileController extends Controller
 {
     /**
@@ -23,6 +24,8 @@ class ProfileController extends Controller
             'user' => $request->user(),
         ]);
     }
+
+
     /**
      * Update the user's profile information.
      */
@@ -43,9 +46,6 @@ class ProfileController extends Controller
 
         return back()->with('success', 'Profil berhasil diperbarui.');
     }
-
-
-
     /**
      * Delete the user's account.
      */

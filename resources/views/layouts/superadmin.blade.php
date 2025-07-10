@@ -20,46 +20,34 @@
     </div>
 
     <div class="p-4">
-      <!-- Light Logo -->
-      <img src="https://fluxui.dev/img/demo/logo.png" alt="Logo" class="dark:hidden mb-4 w-32">
-      <!-- Dark Logo -->
-      <img src="https://fluxui.dev/img/demo/dark-mode-logo.png" alt="Logo Dark" class="hidden dark:block mb-4 w-32">
-
-      <!-- Search -->
-      <div class="relative mb-4">
-        <input type="text" placeholder="Search..." class="w-full px-3 py-2 rounded-md bg-zinc-100 dark:bg-zinc-800 text-sm focus:outline-none focus:ring focus:ring-blue-500">
-        <div class="absolute right-2 top-2 text-zinc-500">
-          🔍
-        </div>
-      </div>
-
       <!-- Navigation -->
       <nav class="flex flex-col gap-1">
-        <a href="#" class="flex items-center gap-2 px-3 py-2 rounded-md bg-zinc-200 dark:bg-zinc-700 font-semibold">
-          🏠 Home
-        </a>
-        <a href="#" class="flex items-center gap-2 px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md">
-          📥 Inbox <span class="ml-auto text-xs bg-blue-500 text-white px-2 py-0.5 rounded-full">12</span>
-        </a>
-        <a href="#" class="flex items-center gap-2 px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md">📄 Documents</a>
-        <a href="#" class="flex items-center gap-2 px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md">📅 Calendar</a>
+      <a href="{{ route('superadmin.dashboard') }}" class="flex items-center gap-2 px-3 py-2 rounded-md bg-zinc-200 dark:bg-zinc-700 font-semibold">
+      🏠 Home
+      </a>
+      
+        <!-- Super Admin Menu -->
+        @if(Auth::user() && Auth::user()->role === 'superadmin')
+          <a href="{{ route('karyawan.index') }}" class="flex items-center gap-2 px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md">
+            👤 Kelola Karyawan
+          </a>
+          <a href="{{ route('shift.index') }}" class="flex items-center gap-2 px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md">
+            🔁 Kelola Shift
+          </a>
+          <a href="{{ route('jadwal.index') }}" class="flex items-center gap-2 px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md">
+            📅 Kelola Jadwal
+          </a>
+        @endif
 
-        <div class="mt-4">
-          <div class="text-xs uppercase text-zinc-500 mb-1">Favorites</div>
-          <a href="#" class="block px-3 py-2 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md">Marketing site</a>
-          <a href="#" class="block px-3 py-2 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md">Android app</a>
-          <a href="#" class="block px-3 py-2 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md">Brand guidelines</a>
-        </div>
-
-          <!-- Logout -->
-      <div class="mt-8">
+        <!-- Logout -->
+        <div class="mt-8">
           <form method="POST" action="{{ route('logout') }}">
               @csrf
               <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">
                   Logout
               </button>
           </form>
-      </div>
+        </div>
       </nav>
     </div>
   </aside>
@@ -88,3 +76,4 @@
     </main>
   </div>
 </body>
+</html>

@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Shift extends Model
 {
-    protected $fillable = ['nama', 'start', 'end'];
+    use HasFactory;
 
-    // Relasi ke jadwal
-    public function jadwals()
-    {
-        return $this->hasMany(Jadwal::class);
-    }
+    protected $table = 'shift';
+
+    protected $fillable = [
+        'nama',
+        'start',
+        'end',
+    ];
 }
